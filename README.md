@@ -66,7 +66,7 @@ var TCMention = require("medium-editor-tc-mention").TCMention;
 require("medium-editor-tc-mention/lib/mention-panel.min.css");
 ```
 
-### UMD versions
+### UMD version
 
 You can find UMD version of this module at [`/lib/index.min.js`](https://github.com/tomchentw/medium-editor-tc-mention/blob/master/lib/index.min.js). Reference them directly in your `html`:
 
