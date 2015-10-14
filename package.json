@@ -11,7 +11,9 @@
   "scripts": {
     "clean": "rimraf lib",
     "prebuild": "npm run lint && npm run clean",
-    "build": "babel src --out-dir lib",
+    "build:babel": "babel src --out-dir lib",
+    "build:webpack": "webpack -p && rimraf lib/mention-panel.min.js lib/mention-panel.min.js.map lib/mention-panel.min.css.map",
+    "build": "npm run build:babel && npm run build:webpack",
     "lint": "eslint src",
     "pretest:cov": "npm run lint",
     "pretest": "npm run lint",
@@ -47,19 +49,28 @@
   "homepage": "https://tomchentw.github.io/medium-editor-tc-mention/",
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
     "codeclimate-test-reporter": "^0.1.1",
+    "css-loader": "^0.19.0",
     "eslint": "^1.6.0",
     "expect": "^1.12.2",
+    "extract-text-webpack-plugin": "^0.8.2",
     "isparta": "^3.1.0",
     "istanbul": "^0.3.22",
     "jsdom": "^6.5.1",
+    "medium-editor": "^5.8.3",
     "mocha": "^2.3.3",
     "mocha-jsdom": "^1.0.0",
-    "rimraf": "^2.4.3"
+    "node-sass": "^3.3.3",
+    "rimraf": "^2.4.3",
+    "sass-loader": "^3.0.0",
+    "style-loader": "^0.12.4",
+    "webpack": "^1.12.2"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
+    "medium-editor": "^5.8.3"
   }
 }
