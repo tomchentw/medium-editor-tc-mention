@@ -1,10 +1,45 @@
 # medium-editor-tc-mention [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
->
+> MediumEditor extension for mention panels like @username or #tagging
 
 [![Version][npm-image]][npm-url]
 
 
-## Quick start
+## Quick start: CustomizedTagComponent
+
+```js
+export function CustomizedTagComponent (props) {
+  const trigger = props.currentMentionText.substring(0, 1);
+
+  return (
+    <div>
+      <button onClick={() => props.selectMentionCallback(null)}>
+        Cancel
+      </button>
+      <button onClick={() => props.selectMentionCallback(trigger + "mention")}>
+        Select `{ trigger }mention`
+      </button>
+      CustomizedTagComponent!!!
+    </div>
+  );
+}
+
+this.editor = new MediumEditor(this.refs.editable, {
+  extensions: {
+    "mention": new TCMention({
+      tagName: "b",
+      renderPanelContent: function (panelEl, currentMentionText, selectMentionCallback) {
+        ReactDOM.render((
+          <CustomizedTagComponent
+            currentMentionText={currentMentionText}
+            selectMentionCallback={selectMentionCallback}
+          />
+        ), panelEl);
+      },
+      activeTriggerList: ["#", "@"]
+    })
+  }
+});
+```
 
 
 ## Usage
@@ -15,10 +50,51 @@
 npm install --save medium-editor-tc-mention
 ```
 
-All functions are available on the top-level export.
+### Import using module loaders
 
 ```js
+// Default export
+// Equivalent to import {default as TCMention} from "medium-editor-tc-mention";
 import TCMention from "medium-editor-tc-mention";
+
+// Alternative named export
+import { TCMention } from "medium-editor-tc-mention";
+
+// ES5, commonjs
+var TCMention = require("medium-editor-tc-mention").TCMention;
+
+require("medium-editor-tc-mention/lib/mention-panel.min.css");
+```
+
+### UMD versions
+
+You can find UMD version of this module at [`/lib/index.min.js`](https://github.com/tomchentw/medium-editor-tc-mention/blob/master/lib/index.min.js). Reference them directly in your `html`:
+
+```html
+<!doctype html>
+<html>
+<head>
+...
+  <link rel="stylesheet" href="<path_to_medium-editor>/dist/css/medium-editor.css" />
+  <link rel="stylesheet" href="<path_to_medium-editor>/dist/css/themes/default.css" />
+  <link rel="stylesheet" href="<path_to_medium-editor-tc-mention>/lib/mention-panel.min.css" />
+...
+</head>
+<body>
+  <div class="editable"></div>
+
+  <script type="text/javascript" src="<path_to_medium-editor>/dist/js/medium-editor.js"></script>
+  <script type="text/javascript" src="<path_to_medium-editor-tables>/lib/index.min.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    var editor = new MediumEditor('.editable', {
+      extensions: {
+        mention: new TCMention()
+      }
+    });
+  </script>
+</body>
+</html>
 ```
 
 
