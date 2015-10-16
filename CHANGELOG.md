@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.1.0...v1.1.1) (2015-10-16)
+
+
+### Bug Fixes
+
+* **TCMention:** BACKSPACE should call renderPanelContent as well ([07e8b03](https://github.com/tomchentw/medium-editor-tc-mention/commit/07e8b03))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.0.0...v1.1.0) (2015-10-16)
 
