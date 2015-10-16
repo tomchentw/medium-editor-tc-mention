@@ -12,6 +12,7 @@
     word-break: break-all;
     word-wrap: break-word;
     visibility: hidden;
+    overflow: hidden;
     z-index: $z-toolbar;
     border: 1px solid rgba(0,0,0,0.15);
     background-color: white;
@@ -19,4 +20,5 @@
 
 .medium-editor-mention-panel-active {
     visibility: visible;
+    overflow: visible;
 }
