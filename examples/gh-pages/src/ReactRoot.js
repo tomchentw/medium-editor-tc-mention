@@ -36,6 +36,7 @@ export default class ReactRoot extends Component {
     this.editor = new MediumEditor(this.refs.editable, {
       extensions: {
         "mention": new TCMention({
+          extraClassName: "abc123",
           tagName: "b",
           renderPanelContent: function (panelEl, currentMentionText, selectMentionCallback) {
             ReactDOM.render((
