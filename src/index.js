@@ -118,6 +118,8 @@ Your mention implementation
                 if (1 === startOffset && 1 === endOffset) {
                     // last word. So `@` will be deleted.
                     this.hidePanel();
+                } else {
+                    this.updatePanelContentWithDelay();
                 }
                 break;
             case atKeyCode:
