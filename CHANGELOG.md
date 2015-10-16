@@ -1,3 +1,14 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.0...v1.2.1) (2015-10-16)
+
+
+### Features
+
+* **TCMention:** add extraActiveClassName to options ([8815c5d](https://github.com/tomchentw/medium-editor-tc-mention/commit/8815c5d))
+* **mention-panel.min.css:** add overflow property as well ([286a281](https://github.com/tomchentw/medium-editor-tc-mention/commit/286a281))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.1.1...v1.2.0) (2015-10-16)
 
