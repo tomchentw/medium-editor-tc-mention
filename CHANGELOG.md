@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.1.1...v1.2.0) (2015-10-16)
+
+
+### Features
+
+* **TCMention:** add destroyPanelContent for clean up ([bee5dd7](https://github.com/tomchentw/medium-editor-tc-mention/commit/bee5dd7))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.1.0...v1.1.1) (2015-10-16)
 
