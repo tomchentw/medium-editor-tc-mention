@@ -22,7 +22,13 @@ export function unwrapForTextNode (el, doc) {
 export const TCMention = MediumEditor.Extension.extend({
     name: `mention`,
 
-    /* tagNames: [string]
+    /* extraClassName: [string]
+     *
+     * Extra className to be added to the `medium-editor-mention-panel` element.
+     */
+    extraClassName: ``,
+
+    /* tagName: [string]
      *
      * Element tag name that would indicate that this mention. It will have
      * `medium-editor-mention-at` className applied on it.
@@ -71,7 +77,10 @@ export const TCMention = MediumEditor.Extension.extend({
     createPanel () {
         const el = this.document.createElement(`div`);
 
-        el.className = `medium-editor-mention-panel`;
+        el.classList.add(`medium-editor-mention-panel`);
+        if (this.extraClassName) {
+          el.classList.add(this.extraClassName);
+        }
         el.innerHTML = this.getTemplate();
 
         return el;
