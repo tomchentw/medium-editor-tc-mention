@@ -37,6 +37,7 @@ export default class ReactRoot extends Component {
       extensions: {
         "mention": new TCMention({
           extraClassName: "abc123",
+          extraActiveClassName: "xyz",
           tagName: "b",
           renderPanelContent: function (panelEl, currentMentionText, selectMentionCallback) {
             ReactDOM.render((
