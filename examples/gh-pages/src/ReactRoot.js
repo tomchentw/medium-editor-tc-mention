@@ -46,6 +46,9 @@ export default class ReactRoot extends Component {
               />
             ), panelEl);
           },
+          destroyPanelContent: function (panelEl) {
+            ReactDOM.unmountComponentAtNode(panelEl);
+          },
           activeTriggerList: ["#", "@"]
         })
       }
