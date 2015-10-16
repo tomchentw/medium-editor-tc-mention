@@ -54,6 +54,14 @@ export const TCMention = MediumEditor.Extension.extend({
      */
     renderPanelContent: () => {},
 
+    /* destroyPanelContent: [function (panelEl: dom)]
+     *
+     * Destroy function to remove any contents rendered by renderPanelContent before panelEl being removed from the document.
+     *
+     * @params panelEl: DOM element of the panel.
+     */
+    destroyPanelContent: () => {},
+
     activeTriggerList: [`@`],
 
     triggerClassNameMap: {
@@ -96,6 +104,7 @@ Your mention implementation
     destroy: function () {
         if (this.mentionPanel) {
             if (this.mentionPanel.parentNode) {
+                this.destroyPanelContent(this.mentionPanel);
                 this.mentionPanel.parentNode.removeChild(this.mentionPanel);
             }
             delete this.mentionPanel;
