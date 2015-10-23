@@ -138,14 +138,14 @@ Your mention implementation
                 }
                 break;
             case atKeyCode:
-                if (-1 !== this.activeTriggerList.indexOf(`@`)) {
+                if (!!event.shiftKey && -1 !== this.activeTriggerList.indexOf(`@`)) {
                     this.handleTriggerKeydown(`@`, event);
                 } else {
                     this.updatePanelContentWithDelay();
                 }
                 break;
             case hashKeyCode:
-                if (-1 !== this.activeTriggerList.indexOf(`#`)) {
+                if (!!event.shiftKey && -1 !== this.activeTriggerList.indexOf(`#`)) {
                     this.handleTriggerKeydown(`#`, event);
                 } else {
                     this.updatePanelContentWithDelay();
