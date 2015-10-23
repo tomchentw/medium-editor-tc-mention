@@ -1,3 +1,13 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.1...v1.2.2) (2015-10-23)
+
+
+### Bug Fixes
+
+* **TCMention:** check if event.shiftKey is active for @ and # ([5207462](https://github.com/tomchentw/medium-editor-tc-mention/commit/5207462)), closes [#1](https://github.com/tomchentw/medium-editor-tc-mention/issues/1)
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.0...v1.2.1) (2015-10-16)
 
