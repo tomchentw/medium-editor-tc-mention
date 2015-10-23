@@ -13,9 +13,13 @@ import {
 
 export function CustomizedTagComponent (props) {
   const trigger = props.currentMentionText.substring(0, 1);
+  const current = props.currentMentionText.substring(1);
 
   return (
     <div>
+      <label>
+        Current text: {current}
+      </label>
       <button onClick={() => props.selectMentionCallback(null)}>
         Cancel
       </button>
