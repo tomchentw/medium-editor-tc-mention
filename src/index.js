@@ -81,6 +81,7 @@ export const TCMention = MediumEditor.Extension.extend({
         this.getEditorOption(`elementsContainer`).appendChild(this.mentionPanel);
 
         this.subscribe(`editableKeydown`, ::this.handleKeydown);
+        this.subscribe(`editableBlur`, ::this.handleBlur);
         //
         // instance variables
         this.trigger = null;
@@ -155,6 +156,10 @@ Your mention implementation
                 this.updatePanelContentWithDelay();
                 break;
         }
+    },
+
+    handleBlur (event) {
+        this.hidePanel();
     },
 
     handleTriggerKeydown (trigger, event) {
