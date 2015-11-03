@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.2...v1.3.0) (2015-11-03)
+
+
+### Bug Fixes
+
+* **TCMention:** hide mention panel on editableBlur ([65f007b](https://github.com/tomchentw/medium-editor-tc-mention/commit/65f007b)), closes [#2](https://github.com/tomchentw/medium-editor-tc-mention/issues/2)
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.1...v1.2.2) (2015-10-23)
 
