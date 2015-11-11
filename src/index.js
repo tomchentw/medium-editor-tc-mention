@@ -225,15 +225,16 @@ Your mention implementation
     },
 
     positionPanel () {
-        const {bottom, left} = this.activeMentionAt.getBoundingClientRect();
+        const {bottom, left, width} = this.activeMentionAt.getBoundingClientRect();
         const {pageYOffset} = this.window;
 
         this.mentionPanel.style.top = `${ bottom + pageYOffset }px`;
-        this.mentionPanel.style.left = `${ left }px`;
+        this.mentionPanel.style.left = `${ left + width }px`;
     },
 
     updatePanelContent () {
         const {textContent} = this.activeMentionAt;
+        this.positionPanel();
         this.renderPanelContent(this.mentionPanel, textContent, ::this.handleSelectMention);
     },
 
