@@ -3,7 +3,7 @@
 
 [![Version][npm-image]][npm-url]
 
-<img width="636" alt="screen shot 2015-10-23 at 4 37 56 pm" src="https://cloud.githubusercontent.com/assets/922234/10689707/d2848ab8-79af-11e5-8afc-675a162ec4bf.png">
+<img width="824" alt="screen shot 2015-11-11 at 4 29 30 pm" src="https://cloud.githubusercontent.com/assets/922234/11088093/9b00fe2e-889a-11e5-801d-b6f79c568dde.png">
 
 
 ## Quick start: CustomizedTagComponent
