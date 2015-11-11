@@ -1,3 +1,17 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.3.0...v1.4.0) (2015-11-11)
+
+
+### Bug Fixes
+
+* **TCMention:** should include pageXOffset for left as well ([7f24f3e](https://github.com/tomchentw/medium-editor-tc-mention/commit/7f24f3e))
+
+### Features
+
+* **TCMention:** panel position to be the end of activeMentionAt element ([cb7768a](https://github.com/tomchentw/medium-editor-tc-mention/commit/cb7768a))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.2.2...v1.3.0) (2015-11-03)
 
