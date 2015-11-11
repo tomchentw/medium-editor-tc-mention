@@ -226,10 +226,10 @@ Your mention implementation
 
     positionPanel () {
         const {bottom, left, width} = this.activeMentionAt.getBoundingClientRect();
-        const {pageYOffset} = this.window;
+        const {pageXOffset, pageYOffset} = this.window;
 
-        this.mentionPanel.style.top = `${ bottom + pageYOffset }px`;
-        this.mentionPanel.style.left = `${ left + width }px`;
+        this.mentionPanel.style.top = `${ pageYOffset + bottom }px`;
+        this.mentionPanel.style.left = `${ pageXOffset + left + width }px`;
     },
 
     updatePanelContent () {
