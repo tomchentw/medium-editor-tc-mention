@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.4.0...v1.4.1) (2015-11-11)
+
+
+### Bug Fixes
+
+* **TCMention:** add autoHideOnBlurDelay to options ([2227777](https://github.com/tomchentw/medium-editor-tc-mention/commit/2227777)), closes [#3](https://github.com/tomchentw/medium-editor-tc-mention/issues/3)
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.3.0...v1.4.0) (2015-11-11)
 
