@@ -75,6 +75,8 @@ export const TCMention = MediumEditor.Extension.extend({
         "@": `medium-editor-mention-at`,
     },
 
+    autoHideOnBlurDelay: 300,
+
     init () {
         this.mentionPanel = this.createPanel();
 
@@ -82,6 +84,7 @@ export const TCMention = MediumEditor.Extension.extend({
 
         this.subscribe(`editableKeydown`, ::this.handleKeydown);
         this.subscribe(`editableBlur`, ::this.handleBlur);
+        this.subscribe(`focus`, ::this.handleFocus);
         //
         // instance variables
         this.trigger = null;
@@ -159,7 +162,11 @@ Your mention implementation
     },
 
     handleBlur (event) {
-        this.hidePanel();
+        this.autoHideTimeoutId = setTimeout(::this.hidePanel, this.autoHideOnBlurDelay);
+    },
+
+    handleFocus (event) {
+        clearTimeout(this.autoHideTimeoutId);
     },
 
     handleTriggerKeydown (trigger, event) {
