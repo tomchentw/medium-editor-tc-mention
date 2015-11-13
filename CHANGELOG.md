@@ -1,3 +1,28 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.4.1...v2.0.0) (2015-11-13)
+
+
+### Features
+
+* **TCMention:** rewrite mention detection using different algorithm ([58d6666](https://github.com/tomchentw/medium-editor-tc-mention/commit/58d6666))
+
+
+### BREAKING CHANGES
+
+* TCMention: detect the "word" based on current caret position
+
+    The intention is to make its behaviour much closer to Facebook/Medium. Also rename the option of `autoHideOnBlurDelay` to `hideOnBlurDelay`.
+
+    Before:
+
+    The user type in @ or # to trigger mention panel immediately. If you already type one and navigate it back to the position using your arrow keys on keyboard, the mention panel won't show up this time.
+
+    After:
+
+    The user has to type in @ or # with one more word to trigger mention panel. Navigating back to the word will show up the mention panel.
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.4.0...v1.4.1) (2015-11-11)
 
