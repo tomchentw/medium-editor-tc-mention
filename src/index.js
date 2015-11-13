@@ -75,43 +75,14 @@ export const TCMention = MediumEditor.Extension.extend({
         "@": `medium-editor-mention-at`,
     },
 
-    autoHideOnBlurDelay: 300,
+    hideOnBlurDelay: 300,
 
     init () {
-        this.mentionPanel = this.createPanel();
-
-        this.getEditorOption(`elementsContainer`).appendChild(this.mentionPanel);
-
-        this.subscribe(`editableKeydown`, ::this.handleKeydown);
-        this.subscribe(`editableBlur`, ::this.handleBlur);
-        this.subscribe(`focus`, ::this.handleFocus);
-        //
-        // instance variables
-        this.trigger = null;
-        this.triggerClassName = null;
-        this.activeMentionAt = null;
+        this.initMentionPanel();
+        this.attachEventHandlers();
     },
 
-    createPanel () {
-        const el = this.document.createElement(`div`);
-
-        el.classList.add(`medium-editor-mention-panel`);
-        if (this.extraClassName) {
-          el.classList.add(this.extraClassName);
-        }
-        el.innerHTML = this.getTemplate();
-
-        return el;
-    },
-
-    getTemplate: function () {
-        return (
-`<p>
-Your mention implementation
-</p>`);
-    },
-
-    destroy: function () {
+    destroy () {
         if (this.mentionPanel) {
             if (this.mentionPanel.parentNode) {
                 this.destroyPanelContent(this.mentionPanel);
@@ -121,78 +92,50 @@ Your mention implementation
         }
     },
 
-    handleKeydown (event) {
-        switch(MediumEditor.util.getKeyCode(event)) {
-            case MediumEditor.util.keyCode.ESCAPE:
-                this.hidePanel();
-                break;
-            case MediumEditor.util.keyCode.SPACE:
-                this.hidePanel();
-                break;
-            case MediumEditor.util.keyCode.ENTER:
-                this.hidePanel();
-                break;
-            case MediumEditor.util.keyCode.BACKSPACE:
-                const {startOffset, endOffset} = MediumEditor.selection.getSelectionRange(this.document);
-                if (1 === startOffset && 1 === endOffset) {
-                    // last word. So `@` will be deleted.
-                    this.hidePanel();
-                } else {
-                    this.updatePanelContentWithDelay();
-                }
-                break;
-            case atKeyCode:
-                if (!!event.shiftKey && -1 !== this.activeTriggerList.indexOf(`@`)) {
-                    this.handleTriggerKeydown(`@`, event);
-                } else {
-                    this.updatePanelContentWithDelay();
-                }
-                break;
-            case hashKeyCode:
-                if (!!event.shiftKey && -1 !== this.activeTriggerList.indexOf(`#`)) {
-                    this.handleTriggerKeydown(`#`, event);
-                } else {
-                    this.updatePanelContentWithDelay();
-                }
-                break;
-            default:
-                this.updatePanelContentWithDelay();
-                break;
+    initMentionPanel () {
+        const el = this.document.createElement(`div`);
+
+        el.classList.add(`medium-editor-mention-panel`);
+        if (this.extraClassName) {
+          el.classList.add(this.extraClassName);
+        }
+
+        this.getEditorOption(`elementsContainer`).appendChild(el);
+
+        this.mentionPanel = el;
+    },
+
+    attachEventHandlers () {
+        if (null != this.hideOnBlurDelay) {
+            // for hideOnBlurDelay, the panel should hide after blur event
+            this.subscribe(`blur`, ::this.handleBlur);
+            // and clear out hide timeout if focus again
+            this.subscribe(`focus`, ::this.handleFocus);
+        }
+        // if the editor changes its content, we have to show or hide the panel
+        this.subscribe(`editableKeyup`, ::this.handleKeyup);
+    },
+
+    handleBlur () {
+        if (null != this.hideOnBlurDelay) {
+            this.hideOnBlurDelayId = setTimeout(::this.hidePanel, this.hideOnBlurDelay);
         }
     },
 
-    handleBlur (event) {
-        this.autoHideTimeoutId = setTimeout(::this.hidePanel, this.autoHideOnBlurDelay);
-    },
-
-    handleFocus (event) {
-        clearTimeout(this.autoHideTimeoutId);
-    },
-
-    handleTriggerKeydown (trigger, event) {
-        this.trigger = trigger;
-        this.triggerClassName = this.triggerClassNameMap[this.trigger];
-
-        event.preventDefault(); // Remove typed in `${ this.trigger }`
-        const selectionStart = MediumEditor.selection.getSelectionStart(this.document);
-        if (selectionStart.classList.contains(this.triggerClassName)) {
-            // The case: `##` or `#medium#`
-            // Just ignore it for now.
-            return;
+    handleFocus () {
+        if (this.hideOnBlurDelayId) {
+            clearTimeout(this.hideOnBlurDelayId);
+            this.hideOnBlurDelayId = null;
         }
-        this.hidePanel();
-        this.showPanel();
-        this.positionPanel();
-        this.updatePanelContentWithDelay();
     },
 
-    handleSelectMention (seletedText) {
-        if (seletedText) {
-            const textNode = this.activeMentionAt.childNodes[0];
-            textNode.textContent = seletedText;
-            MediumEditor.selection.select(this.document, textNode, seletedText.length);
-            //
-            this.hidePanel();
+    handleKeyup (event) {
+        const keyCode = MediumEditor.util.getKeyCode(event);
+        const isSpace = keyCode === MediumEditor.util.keyCode.SPACE;
+        this.getWordFromSelection(event.target, isSpace ? -1 : 0);
+
+        if (!isSpace && -1 !== this.activeTriggerList.indexOf(this.trigger) && 1 < this.word.length) {
+            this.showPanel();
         } else {
             this.hidePanel();
         }
@@ -214,20 +157,63 @@ Your mention implementation
         }
     },
 
-    showPanel () {
-        // Instead, insert our own version of it.
-        // TODO: Not sure why, but using <span> tag doens't work here
-        const html = `<${ this.tagName } class="${ this.triggerClassName }">${ this.trigger }</${ this.tagName }>`;
-        MediumEditor.util.insertHTMLCommand(this.document, html);
-
-        if (this.mentionPanel.classList.contains(`medium-editor-mention-panel-active`)) {
+    getWordFromSelection (target, initialDiff) {
+        const {startContainer, startOffset, endContainer, endOffset} = MediumEditor.selection.getSelectionRange(this.document);
+        if (startContainer !== endContainer) {
             return;
         }
+        const {textContent} = startContainer;
 
-        this.activeMentionAt = this.document.querySelector(`.${ this.triggerClassName }`)
+        function getWordPosition (position, diff) {
+            const prevText = textContent[position - 1];
+            if (null == prevText || 0 === prevText.trim().length || 0 >= position || textContent.length < position) {
+                return position;
+            } else {
+                return getWordPosition(position + diff, diff);
+            }
+        }
+
+        this.wordStart = getWordPosition(startOffset + initialDiff, -1);
+        this.wordEnd = getWordPosition(startOffset + initialDiff, 1) - 1;
+        this.word = textContent.slice(this.wordStart, this.wordEnd);
+        this.trigger = this.word.slice(0, 1);
+        this.triggerClassName = this.triggerClassNameMap[this.trigger];
+    },
+
+    showPanel () {
+        if (!this.mentionPanel.classList.contains(`medium-editor-mention-panel-active`)) {
+            this.activatePanel();
+            this.wrapWordInMentionAt();
+        }
+        this.positionPanel();
+        this.updatePanelContent();
+    },
+
+    activatePanel () {
         this.mentionPanel.classList.add(`medium-editor-mention-panel-active`);
         if (this.extraActiveClassName) {
             this.mentionPanel.classList.add(this.extraActiveClassName);
+        }
+    },
+
+    wrapWordInMentionAt () {
+        const selection = this.document.getSelection();
+        if (selection.rangeCount) {
+            // http://stackoverflow.com/a/6328906/1458162
+            const range = selection.getRangeAt(0).cloneRange();
+            range.setStart(range.startContainer, this.wordStart);
+            range.setEnd(range.startContainer, Math.min(this.wordEnd, range.startContainer.textContent.length));
+            // Instead, insert our own version of it.
+            // TODO: Not sure why, but using <span> tag doens't work here
+            const element = this.document.createElement(this.tagName);
+            element.classList.add(this.triggerClassName);
+            this.activeMentionAt = element;
+            //
+            range.surroundContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            //
+            MediumEditor.selection.select(this.document, element.firstChild, this.word.length);
         }
     },
 
@@ -240,14 +226,18 @@ Your mention implementation
     },
 
     updatePanelContent () {
-        const {textContent} = this.activeMentionAt;
-        this.positionPanel();
-        this.renderPanelContent(this.mentionPanel, textContent, ::this.handleSelectMention);
+        this.renderPanelContent(this.mentionPanel, this.word, ::this.handleSelectMention);
     },
 
-    updatePanelContentWithDelay () {
-        if (this.activeMentionAt && this.activeMentionAt === MediumEditor.selection.getSelectionStart(this.document)) {
-            this.base.delay(::this.updatePanelContent);
+    handleSelectMention (seletedText) {
+        if (seletedText) {
+            const textNode = this.activeMentionAt.firstChild;
+            textNode.textContent = seletedText;
+            MediumEditor.selection.select(this.document, textNode, seletedText.length);
+            //
+            this.hidePanel();
+        } else {
+            this.hidePanel();
         }
     },
 
