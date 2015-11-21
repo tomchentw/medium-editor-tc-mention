@@ -1,7 +1,7 @@
-# medium-editor-tc-mention [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
+# medium-editor-tc-mention
 > MediumEditor extension for mention panels like @username or #tagging
 
-[![Version][npm-image]][npm-url]
+[![Version][npm-image]][npm-url] [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
 
 <img width="824" alt="screen shot 2015-11-11 at 4 29 30 pm" src="https://cloud.githubusercontent.com/assets/922234/11088093/9b00fe2e-889a-11e5-801d-b6f79c568dde.png">
 
