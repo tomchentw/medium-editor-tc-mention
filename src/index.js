@@ -79,6 +79,11 @@ export const TCMention = MediumEditor.Extension.extend({
         "@": `medium-editor-mention-at`,
     },
 
+    activeTriggerClassNameMap: {
+        "#": `medium-editor-mention-hash-active`,
+        "@": `medium-editor-mention-at-active`,
+    },
+
     hideOnBlurDelay: 300,
 
     init () {
@@ -151,6 +156,9 @@ export const TCMention = MediumEditor.Extension.extend({
             this.mentionPanel.classList.remove(this.extraActiveClassName);
         }
         if (this.activeMentionAt) {
+            this.activeMentionAt.classList.remove(this.activeTriggerClassName);
+        }
+        if (this.activeMentionAt) {
             // http://stackoverflow.com/a/27004526/1458162
             const {parentNode, nextSibling, firstChild} = this.activeMentionAt;
             let textNode = nextSibling;
@@ -204,6 +212,7 @@ export const TCMention = MediumEditor.Extension.extend({
         this.word = textContent.slice(this.wordStart, this.wordEnd);
         this.trigger = this.word.slice(0, 1);
         this.triggerClassName = this.triggerClassNameMap[this.trigger];
+        this.activeTriggerClassName = this.activeTriggerClassNameMap[this.trigger];
     },
 
     showPanel () {
@@ -224,9 +233,14 @@ export const TCMention = MediumEditor.Extension.extend({
 
     wrapWordInMentionAt () {
         const selection = this.document.getSelection();
-        if (selection.rangeCount) {
-            // http://stackoverflow.com/a/6328906/1458162
-            const range = selection.getRangeAt(0).cloneRange();
+        if (!selection.rangeCount) {
+            return;
+        }
+        // http://stackoverflow.com/a/6328906/1458162
+        const range = selection.getRangeAt(0).cloneRange();
+        if (range.startContainer.parentNode.classList.contains(this.triggerClassName)) {
+            this.activeMentionAt = range.startContainer.parentNode;
+        } else {
             range.setStart(range.startContainer, this.wordStart);
             range.setEnd(range.startContainer, Math.min(this.wordEnd, range.startContainer.textContent.length));
             // Instead, insert our own version of it.
@@ -238,9 +252,9 @@ export const TCMention = MediumEditor.Extension.extend({
             range.surroundContents(element);
             selection.removeAllRanges();
             selection.addRange(range);
-            //
-            MediumEditor.selection.select(this.document, element.firstChild, this.word.length);
         }
+        MediumEditor.selection.select(this.document, this.activeMentionAt.firstChild, this.word.length);
+        this.activeMentionAt.classList.add(this.activeTriggerClassName);
     },
 
     positionPanel () {
