@@ -52,6 +52,10 @@ export const TCMention = MediumEditor.Extension.extend({
      */
     extraActivePanelClassName: ``,
 
+    extraTriggerClassNameMap: {},
+
+    extraActiveTriggerClassNameMap: {},
+
     /* tagName: [string]
      *
      * Element tag name that would indicate that this mention. It will have
@@ -171,6 +175,9 @@ export const TCMention = MediumEditor.Extension.extend({
         }
         if (this.activeMentionAt) {
             this.activeMentionAt.classList.remove(this.activeTriggerClassName);
+            if (this.extraActiveTriggerClassName) {
+                this.activeMentionAt.classList.remove(this.extraActiveTriggerClassName);
+            }
         }
         if (this.activeMentionAt) {
             // http://stackoverflow.com/a/27004526/1458162
@@ -227,6 +234,9 @@ export const TCMention = MediumEditor.Extension.extend({
         this.trigger = this.word.slice(0, 1);
         this.triggerClassName = this.triggerClassNameMap[this.trigger];
         this.activeTriggerClassName = this.activeTriggerClassNameMap[this.trigger];
+        //
+        this.extraTriggerClassName = this.extraTriggerClassNameMap[this.trigger];
+        this.extraActiveTriggerClassName = this.extraActiveTriggerClassNameMap[this.trigger];
     },
 
     showPanel () {
@@ -261,6 +271,9 @@ export const TCMention = MediumEditor.Extension.extend({
             // TODO: Not sure why, but using <span> tag doens't work here
             const element = this.document.createElement(this.tagName);
             element.classList.add(this.triggerClassName);
+            if (this.extraTriggerClassName) {
+                element.classList.add(this.extraTriggerClassName);
+            }
             this.activeMentionAt = element;
             //
             range.surroundContents(element);
@@ -269,6 +282,9 @@ export const TCMention = MediumEditor.Extension.extend({
         }
         MediumEditor.selection.select(this.document, this.activeMentionAt.firstChild, this.word.length);
         this.activeMentionAt.classList.add(this.activeTriggerClassName);
+        if (this.extraActiveTriggerClassName) {
+            this.activeMentionAt.classList.add(this.extraActiveTriggerClassName);
+        }
     },
 
     positionPanel () {
