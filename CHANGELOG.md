@@ -1,3 +1,28 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.0.0...v2.1.0) (2015-11-24)
+
+
+### Features
+
+* **TCMention:** add extra className map for trigger ([0b6a64e](https://github.com/tomchentw/medium-editor-tc-mention/commit/0b6a64e))
+* **TCMention:** move caret to after this.activeMentionAt when hidePanel() ([0b3d8e1](https://github.com/tomchentw/medium-editor-tc-mention/commit/0b3d8e1))
+* **TCMention:** rename options for setting className ([40d2822](https://github.com/tomchentw/medium-editor-tc-mention/commit/40d2822))
+* **TCMention:** use activeTriggerClassNameMap to mark mention at tag ([4c6503d](https://github.com/tomchentw/medium-editor-tc-mention/commit/4c6503d))
+
+
+### BREAKING CHANGES
+
+* TCMention: use extraPanelClassName and extraActivePanelClassName instead.
+
+Before & After:
+
+```js
+extraClassName -> extraPanelClassName
+extraActiveClassName -> extraActivePanelClassName
+```
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v1.4.1...v2.0.0) (2015-11-13)
 
