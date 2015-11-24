@@ -26,17 +26,31 @@ export function unwrapForTextNode (el, doc) {
 export const TCMention = MediumEditor.Extension.extend({
     name: `mention`,
 
-    /* extraClassName: [string]
+    /* @deprecated: use extraPanelClassName. Will remove in next major (3.0.0) release
+     * extraClassName: [string]
      *
      * Extra className to be added with the `medium-editor-mention-panel` element.
      */
     extraClassName: ``,
 
-    /* extraActiveClassName: [string]
+    /* @deprecated: use extraActivePanelClassName. Will remove in next major (3.0.0) release
+     * extraActiveClassName: [string]
      *
      * Extra active className to be added with the `medium-editor-mention-panel-active` element.
      */
     extraActiveClassName: ``,
+
+    /* extraPanelClassName: [string]
+     *
+     * Extra className to be added with the `medium-editor-mention-panel` element.
+     */
+    extraPanelClassName: ``,
+
+    /* extraActivePanelClassName: [string]
+     *
+     * Extra active className to be added with the `medium-editor-mention-panel-active` element.
+     */
+    extraActivePanelClassName: ``,
 
     /* tagName: [string]
      *
@@ -105,8 +119,8 @@ export const TCMention = MediumEditor.Extension.extend({
         const el = this.document.createElement(`div`);
 
         el.classList.add(`medium-editor-mention-panel`);
-        if (this.extraClassName) {
-          el.classList.add(this.extraClassName);
+        if (this.extraPanelClassName || this.extraClassName) {
+          el.classList.add(this.extraPanelClassName || this.extraClassName);
         }
 
         this.getEditorOption(`elementsContainer`).appendChild(el);
@@ -152,8 +166,8 @@ export const TCMention = MediumEditor.Extension.extend({
 
     hidePanel () {
         this.mentionPanel.classList.remove(`medium-editor-mention-panel-active`);
-        if (this.extraActiveClassName) {
-            this.mentionPanel.classList.remove(this.extraActiveClassName);
+        if (this.extraActivePanelClassName || this.extraActiveClassName) {
+            this.mentionPanel.classList.remove(this.extraActivePanelClassName || this.extraActiveClassName);
         }
         if (this.activeMentionAt) {
             this.activeMentionAt.classList.remove(this.activeTriggerClassName);
@@ -226,8 +240,8 @@ export const TCMention = MediumEditor.Extension.extend({
 
     activatePanel () {
         this.mentionPanel.classList.add(`medium-editor-mention-panel-active`);
-        if (this.extraActiveClassName) {
-            this.mentionPanel.classList.add(this.extraActiveClassName);
+        if (this.extraActivePanelClassName || this.extraActiveClassName) {
+            this.mentionPanel.classList.add(this.extraActivePanelClassName || this.extraActiveClassName);
         }
     },
 
