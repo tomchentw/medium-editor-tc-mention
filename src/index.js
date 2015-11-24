@@ -1,5 +1,9 @@
 import MediumEditor from "medium-editor";
 
+function last (text) {
+    return text[text.length - 1];
+}
+
 export const atKeyCode = 50;
 export const hashKeyCode = 51;
 
@@ -146,13 +150,35 @@ export const TCMention = MediumEditor.Extension.extend({
         if (this.extraActiveClassName) {
             this.mentionPanel.classList.remove(this.extraActiveClassName);
         }
-
         if (this.activeMentionAt) {
-            // LIKE core#execAction
-            this.base.saveSelection();
-            unwrapForTextNode(this.activeMentionAt, this.document);
-            this.base.restoreSelection();
-            // LIKE core#execAction
+            // http://stackoverflow.com/a/27004526/1458162
+            const {parentNode, nextSibling, firstChild} = this.activeMentionAt;
+            let textNode = nextSibling;
+            if (!nextSibling) {
+                textNode = this.document.createTextNode(``);
+                parentNode.appendChild(textNode);
+            } else if (3 !== nextSibling.nodeType) {
+                textNode = this.document.createTextNode(``);
+                parentNode.insertBefore(textNode, nextSibling);
+            }
+            const lastEmptyWord = last(firstChild.textContent);
+            const hasLastEmptyWord = 0 === lastEmptyWord.trim().length;
+            if (hasLastEmptyWord) {
+                firstChild.textContent = firstChild.textContent.substr(0, firstChild.textContent.length-1);
+                textNode.textContent = `${ lastEmptyWord }${ textNode.textContent }`;
+            } else {
+                if (0 === textNode.textContent.length && 1 < firstChild.textContent.length) {
+                    textNode.textContent = `\u00A0`;
+                }
+            }
+            MediumEditor.selection.select(this.document, textNode, Math.min(textNode.length, 1));
+            if (1 >= firstChild.textContent.length) {
+                // LIKE core#execAction
+                this.base.saveSelection();
+                unwrapForTextNode(this.activeMentionAt, this.document);
+                this.base.restoreSelection();
+            }
+            //
             this.activeMentionAt = null;
         }
     },
