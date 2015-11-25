@@ -4,8 +4,7 @@ function last (text) {
     return text[text.length - 1];
 }
 
-export const atKeyCode = 50;
-export const hashKeyCode = 51;
+export const LEFT_ARROW_KEYCODE = 37;
 
 export function unwrapForTextNode (el, doc) {
     var parentNode = el.parentNode,
@@ -145,7 +144,9 @@ export const TCMention = MediumEditor.Extension.extend({
 
     handleBlur () {
         if (null != this.hideOnBlurDelay) {
-            this.hideOnBlurDelayId = setTimeout(::this.hidePanel, this.hideOnBlurDelay);
+            this.hideOnBlurDelayId = setTimeout(() => {
+                this.hidePanel(false);
+            }, this.hideOnBlurDelay);
         }
     },
 
@@ -164,11 +165,11 @@ export const TCMention = MediumEditor.Extension.extend({
         if (!isSpace && -1 !== this.activeTriggerList.indexOf(this.trigger) && 1 < this.word.length) {
             this.showPanel();
         } else {
-            this.hidePanel();
+            this.hidePanel(keyCode === LEFT_ARROW_KEYCODE);
         }
     },
 
-    hidePanel () {
+    hidePanel (isArrowTowardsLeft) {
         this.mentionPanel.classList.remove(`medium-editor-mention-panel-active`);
         if (this.extraActivePanelClassName || this.extraActiveClassName) {
             this.mentionPanel.classList.remove(this.extraActivePanelClassName || this.extraActiveClassName);
@@ -181,14 +182,17 @@ export const TCMention = MediumEditor.Extension.extend({
         }
         if (this.activeMentionAt) {
             // http://stackoverflow.com/a/27004526/1458162
-            const {parentNode, nextSibling, firstChild} = this.activeMentionAt;
-            let textNode = nextSibling;
-            if (!nextSibling) {
+            const {parentNode, previousSibling, nextSibling, firstChild} = this.activeMentionAt;
+            const siblingNode = isArrowTowardsLeft ? previousSibling : nextSibling;
+            let textNode;
+            if (!siblingNode) {
                 textNode = this.document.createTextNode(``);
                 parentNode.appendChild(textNode);
-            } else if (3 !== nextSibling.nodeType) {
+            } else if (3 !== siblingNode.nodeType) {
                 textNode = this.document.createTextNode(``);
-                parentNode.insertBefore(textNode, nextSibling);
+                parentNode.insertBefore(textNode, siblingNode);
+            } else {
+                textNode = siblingNode;
             }
             const lastEmptyWord = last(firstChild.textContent);
             const hasLastEmptyWord = 0 === lastEmptyWord.trim().length;
@@ -200,7 +204,11 @@ export const TCMention = MediumEditor.Extension.extend({
                     textNode.textContent = `\u00A0`;
                 }
             }
-            MediumEditor.selection.select(this.document, textNode, Math.min(textNode.length, 1));
+            if (isArrowTowardsLeft) {
+                MediumEditor.selection.select(this.document, textNode, textNode.length);
+            } else {
+                MediumEditor.selection.select(this.document, textNode, Math.min(textNode.length, 1));
+            }
             if (1 >= firstChild.textContent.length) {
                 // LIKE core#execAction
                 this.base.saveSelection();
@@ -306,9 +314,9 @@ export const TCMention = MediumEditor.Extension.extend({
             textNode.textContent = seletedText;
             MediumEditor.selection.select(this.document, textNode, seletedText.length);
             //
-            this.hidePanel();
+            this.hidePanel(false);
         } else {
-            this.hidePanel();
+            this.hidePanel(false);
         }
     },
 
