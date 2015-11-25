@@ -279,8 +279,9 @@ export const TCMention = MediumEditor.Extension.extend({
             range.surroundContents(element);
             selection.removeAllRanges();
             selection.addRange(range);
+            //
+            MediumEditor.selection.select(this.document, this.activeMentionAt.firstChild, this.word.length);
         }
-        MediumEditor.selection.select(this.document, this.activeMentionAt.firstChild, this.word.length);
         this.activeMentionAt.classList.add(this.activeTriggerClassName);
         if (this.extraActiveTriggerClassName) {
             this.activeMentionAt.classList.add(this.extraActiveTriggerClassName);
