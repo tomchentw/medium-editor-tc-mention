@@ -1,3 +1,14 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.1.0...v2.1.1) (2015-11-25)
+
+
+### Bug Fixes
+
+* **TCMention:** detects if is left arrow key ([fbf4b16](https://github.com/tomchentw/medium-editor-tc-mention/commit/fbf4b16)), closes [#5](https://github.com/tomchentw/medium-editor-tc-mention/issues/5)
+* **TCMention:** select the text only when element is first time created ([59b54be](https://github.com/tomchentw/medium-editor-tc-mention/commit/59b54be))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.0.0...v2.1.0) (2015-11-24)
 

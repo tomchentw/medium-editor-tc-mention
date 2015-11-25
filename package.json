@@ -1,6 +1,6 @@
 {
   "name": "medium-editor-tc-mention",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "MediumEditor extension for mention panels like @username or #tagging",
   "main": "lib/index.js",
   "files": [
