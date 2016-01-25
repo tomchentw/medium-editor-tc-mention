@@ -35,7 +35,7 @@ export default class ReactRoot extends Component {
 
   componentDidMount () {
     const MediumEditor = require("medium-editor");
-    const TCMention = require("../../../src").TCMention;
+    const { TCMention } = require("medium-editor-tc-mention");
 
     this.editor = new MediumEditor(this.refs.editable, {
       extensions: {
