@@ -1,16 +1,12 @@
+/* eslint-disable prefer-arrow-callback */
+
 import {
   default as expect,
 } from "expect";
 
-import {
-  default as jsdom,
-} from "mocha-jsdom";
-
-describe("index", () => {
-  jsdom();
-
-  it("should be exported", () => {
-    const Module = require("../index");
+describe(`index`, function describeIndex() {
+  it(`should be exported`, function it() {
+    const Module = require(`../index`);
 
     expect(Module.default).toExist();
     expect(Module.TCMention).toExist();
