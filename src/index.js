@@ -114,13 +114,8 @@ export const TCMention = MediumEditor.Extension.extend({
   },
 
   destroy() {
-    if (this.mentionPanel) {
-      if (this.mentionPanel.parentNode) {
-        this.destroyPanelContent(this.mentionPanel);
-        this.mentionPanel.parentNode.removeChild(this.mentionPanel);
-      }
-      delete this.mentionPanel;
-    }
+    this.detachEventHandlers();
+    this.destroyMentionPanel();
   },
 
   initMentionPanel() {
@@ -136,15 +131,54 @@ export const TCMention = MediumEditor.Extension.extend({
     this.mentionPanel = el;
   },
 
+  destroyMentionPanel() {
+    if (this.mentionPanel) {
+      if (this.mentionPanel.parentNode) {
+        this.destroyPanelContent(this.mentionPanel);
+        this.mentionPanel.parentNode.removeChild(this.mentionPanel);
+      }
+      delete this.mentionPanel;
+    }
+  },
+
+  subscribeAndReturnUnsubscribeCallback(eventName, callbackName) {
+    const boundCallback = ::this[callbackName];
+    this.subscribe(eventName, boundCallback);
+    return () => {
+      this.unsubscribe(eventName, boundCallback);
+    };
+  },
+
   attachEventHandlers() {
+    this.unsubscribeCallbacks = [];
+
+    const subscribeCallbackName = (eventName, callbackName) => {
+      const boundCallback = ::this[callbackName];
+      this.subscribe(eventName, boundCallback);
+
+      this.unsubscribeCallbacks.push(() => {
+        this.unsubscribe(eventName, boundCallback);
+      });
+    };
+
     if (this.hideOnBlurDelay !== null && this.hideOnBlurDelay !== undefined) {
       // for hideOnBlurDelay, the panel should hide after blur event
-      this.subscribe(`blur`, ::this.handleBlur);
+      subscribeCallbackName(`blur`, `handleBlur`);
       // and clear out hide timeout if focus again
-      this.subscribe(`focus`, ::this.handleFocus);
+      subscribeCallbackName(`focus`, `handleFocus`);
     }
     // if the editor changes its content, we have to show or hide the panel
-    this.subscribe(`editableKeyup`, ::this.handleKeyup);
+    subscribeCallbackName(`editableKeyup`, `handleKeyup`);
+  },
+
+  detachEventHandlers() {
+    if (this.hideOnBlurDelayId) {
+      clearTimeout(this.hideOnBlurDelayId);
+    }
+    if (this.unsubscribeCallbacks) {
+      this.unsubscribeCallbacks.forEach(boundCallback => boundCallback());
+      this.unsubscribeCallbacks = null;
+    }
   },
 
   handleBlur() {
