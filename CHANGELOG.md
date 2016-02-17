@@ -1,3 +1,13 @@
+<a name="2.2.1"></a>
+## [2.2.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.0...v2.2.1) (2016-02-17)
+
+
+### Bug Fixes
+
+* **TCMention:** should unsubscribe callbacks when destroy ([0d911c1](https://github.com/tomchentw/medium-editor-tc-mention/commit/0d911c1))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.1.1...v2.2.0) (2016-01-25)
 
