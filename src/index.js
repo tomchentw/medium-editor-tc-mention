@@ -141,14 +141,6 @@ export const TCMention = MediumEditor.Extension.extend({
     }
   },
 
-  subscribeAndReturnUnsubscribeCallback(eventName, callbackName) {
-    const boundCallback = ::this[callbackName];
-    this.subscribe(eventName, boundCallback);
-    return () => {
-      this.unsubscribe(eventName, boundCallback);
-    };
-  },
-
   attachEventHandlers() {
     this.unsubscribeCallbacks = [];
 
@@ -157,7 +149,8 @@ export const TCMention = MediumEditor.Extension.extend({
       this.subscribe(eventName, boundCallback);
 
       this.unsubscribeCallbacks.push(() => {
-        this.unsubscribe(eventName, boundCallback);
+        // Bug: this.unsubscribe isn't exist!
+        this.base.unsubscribe(eventName, boundCallback);
       });
     };
 
