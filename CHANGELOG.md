@@ -1,3 +1,13 @@
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.1...v2.2.2) (2016-02-17)
+
+
+### Bug Fixes
+
+* **TCMention:** use this.base.unsubscribe ([db9044c](https://github.com/tomchentw/medium-editor-tc-mention/commit/db9044c))
+
+
+
 <a name="2.2.1"></a>
 ## [2.2.1](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.0...v2.2.1) (2016-02-17)
 
