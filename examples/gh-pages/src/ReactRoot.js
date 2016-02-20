@@ -64,6 +64,9 @@ export default class ReactRoot extends Component {
         })
       }
     });
+    this.editor.subscribe(`editableInput`, event => {
+      console.log(`editableInput: `, event);
+    });
   }
 
   render () {
