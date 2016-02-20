@@ -360,6 +360,16 @@ export const TCMention = MediumEditor.Extension.extend({
       textNode.textContent = seletedText;
       MediumEditor.selection.select(this.document, textNode, seletedText.length);
       //
+      // If one of our contenteditables currently has focus, we should
+      // attempt to trigger the 'editableInput' event
+      const target = this.base.getFocusedElement();
+      if (target) {
+        this.base.events.updateInput(target, {
+          target,
+          currentTarget: target,
+        });
+      }
+      //
       this.hidePanel(false);
     } else {
       this.hidePanel(false);
