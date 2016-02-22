@@ -1,3 +1,13 @@
+<a name="2.2.3"></a>
+## [2.2.3](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.2...v2.2.3) (2016-02-22)
+
+
+### Bug Fixes
+
+* **TCMention:** emit editableInput event in selectMentionCallback ([6bf2172](https://github.com/tomchentw/medium-editor-tc-mention/commit/6bf2172)), closes [#6](https://github.com/tomchentw/medium-editor-tc-mention/issues/6)
+
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.1...v2.2.2) (2016-02-17)
 
