@@ -1,3 +1,12 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="2.2.4"></a>
+## [2.2.4](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.3...v2.2.4) (2016-05-31)
+
+
+
 <a name="2.2.3"></a>
 ## [2.2.3](https://github.com/tomchentw/medium-editor-tc-mention/compare/v2.2.2...v2.2.3) (2016-02-22)
 
@@ -187,6 +196,3 @@ extraActiveClassName -> extraActivePanelClassName
 ### Features
 
 * **src:** add TCMention as es6 module ([d1191be](https://github.com/tomchentw/medium-editor-tc-mention/commit/d1191be))
-
-
-
