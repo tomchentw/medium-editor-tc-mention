@@ -4,10 +4,10 @@ import {
   default as expect,
 } from "expect";
 
+import * as Module from "../index";
+
 describe(`index`, function describeIndex() {
   it(`should be exported`, function it() {
-    const Module = require(`../index`);
-
     expect(Module.default).toExist();
     expect(Module.TCMention).toExist();
   });

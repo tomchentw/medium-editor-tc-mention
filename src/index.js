@@ -233,7 +233,7 @@ export const TCMention = MediumEditor.Extension.extend({
       if (hasLastEmptyWord) {
         const { textContent } = firstChild;
         firstChild.textContent = textContent.substr(0, textContent.length - 1);
-        textNode.textContent = `${ lastEmptyWord }${ textNode.textContent }`;
+        textNode.textContent = `${lastEmptyWord}${textNode.textContent}`;
       } else {
         if (textNode.textContent.length === 0 && firstChild.textContent.length > 1) {
           textNode.textContent = `\u00A0`;
@@ -346,8 +346,8 @@ export const TCMention = MediumEditor.Extension.extend({
     const { bottom, left, width } = this.activeMentionAt.getBoundingClientRect();
     const { pageXOffset, pageYOffset } = this.window;
 
-    this.mentionPanel.style.top = `${ pageYOffset + bottom }px`;
-    this.mentionPanel.style.left = `${ pageXOffset + left + width }px`;
+    this.mentionPanel.style.top = `${pageYOffset + bottom}px`;
+    this.mentionPanel.style.left = `${pageXOffset + left + width}px`;
   },
 
   updatePanelContent() {
