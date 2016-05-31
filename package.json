@@ -75,6 +75,7 @@
     "node-sass": "^3.4.2",
     "rimraf": "^2.5.1",
     "sass-loader": "^3.1.2",
+    "standard-version": "^2.2.1",
     "style-loader": "^0.13.0",
     "tomchentw-npm-dev": "^3.2.0",
     "webpack": "^1.12.12"
